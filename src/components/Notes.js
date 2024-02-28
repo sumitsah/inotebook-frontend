@@ -3,15 +3,21 @@ import noteContext from "../context/notes/noteContext"
 import Noteitem from "./Noteitem";
 import Addnote from "./Addnote"
 import { useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
 
-const Notes = () => {
+const Notes = (props) => {
   const context = useContext(noteContext);
   const { notes, getNotes, editNote } = context;
+  let navigate = useNavigate();
 
   const [note, setNote] = useState({ id: "", etitle: "", edescription: "", etag: "Deafault" })
 
   useEffect(() => {
-    getNotes()
+    if (localStorage.getItem('token')) {
+      getNotes()
+    } else {
+      navigate("/login");
+    }
     // myModal = new Modal('#myModal', {
     //   keyboard: false
     // })
@@ -20,16 +26,17 @@ const Notes = () => {
   const ref = useRef(null)
   const refClose = useRef(null);
 
-  const updateNote = (currentNote) => {
+  const loadUpdateNote = (currentNote) => {
     // const modalToggle = document.getElementById('exampleModal');
     // myModal.show(modalToggle)
     ref.current.click();
     setNote({ id: currentNote._id, etitle: currentNote.title, edescription: currentNote.description, etag: currentNote.tag });
   }
 
-  const handleClick = (e) => {
+  const updateOnClick = (e) => {
     editNote(note.id, note.etitle, note.edescription, note.etag);
     refClose.current.click();
+    props.showAlert("Updated successfully", "success");
   }
 
   const onChange = (e) => {
@@ -39,7 +46,7 @@ const Notes = () => {
 
   return (
     <>
-      <Addnote />
+      <Addnote showAlert={props.showAlert} />
 
       <button ref={ref} type="button" className="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
         Launch demo modal
@@ -73,7 +80,7 @@ const Notes = () => {
             </div>
             <div className="modal-footer">
               <button ref={refClose} type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button disabled={note.etitle.length < 5 || note.edescription.length < 5} onClick={handleClick} type="button" className="btn btn-primary">Update Note</button>
+              <button disabled={note.etitle.length < 5 || note.edescription.length < 5} onClick={updateOnClick} type="button" className="btn btn-primary">Update Note</button>
             </div>
           </div>
         </div>
@@ -84,7 +91,7 @@ const Notes = () => {
           {notes.length === 0 && 'No notes to display'}
         </div>
         {notes.map((note) => {
-          return <Noteitem key={note._id} updateNote={updateNote} note={note} />
+          return <Noteitem key={note._id} loadUpdateNote={loadUpdateNote} note={note} showAlert={props.showAlert} />
         })}
       </div>
     </>

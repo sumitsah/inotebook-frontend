@@ -27,7 +27,7 @@ const NoteState = (props) => {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjVkODc3NmI5YmJlOTg4M2NkYjg2NGY1In0sImlhdCI6MTcwODY4NzI5Mn0.GBvKQQGKJHKUwc_1kUbA5MUS1b-OWFREOXV6JthpwHg"
+                "auth-token": localStorage.getItem('token')
             }
         });
         const json = await response.json()
@@ -42,7 +42,7 @@ const NoteState = (props) => {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjVkODc3NmI5YmJlOTg4M2NkYjg2NGY1In0sImlhdCI6MTcwODY4NzI5Mn0.GBvKQQGKJHKUwc_1kUbA5MUS1b-OWFREOXV6JthpwHg"
+                "auth-token": localStorage.getItem('token')
             },
             body: JSON.stringify({ title, description, tag })
         });
@@ -56,7 +56,7 @@ const NoteState = (props) => {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
-                "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjVkODc3NmI5YmJlOTg4M2NkYjg2NGY1In0sImlhdCI6MTcwODY4NzI5Mn0.GBvKQQGKJHKUwc_1kUbA5MUS1b-OWFREOXV6JthpwHg"
+                "auth-token": localStorage.getItem('token')
             }
         });
         const json = await response.json()
@@ -72,7 +72,7 @@ const NoteState = (props) => {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
-                "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjVkODc3NmI5YmJlOTg4M2NkYjg2NGY1In0sImlhdCI6MTcwODY4NzI5Mn0.GBvKQQGKJHKUwc_1kUbA5MUS1b-OWFREOXV6JthpwHg"
+                "auth-token": localStorage.getItem('token')
                 // 'Content-Type': 'application/x-www-form-urlencoded',
             },
             // body: JSON.stringify(data), // body data type must match "Content-Type" header
